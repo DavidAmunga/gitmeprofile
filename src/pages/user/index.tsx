@@ -22,7 +22,7 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
         <meta name="description" content="Neat Github Stats Profile" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="max-w-6xl mx-auto py-8">
+      <div className="w-screen md:max-w-6xl mx-auto py-4 md:py-8 px-8 md:px-1 ">
         {/* Header */}
         <Header />
         {/* User Profile */}

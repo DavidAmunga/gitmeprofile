@@ -22,7 +22,7 @@ const Home: React.FC = () => {
         <meta name="description" content="Neat Github Stats Profile" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="max-w-xl mx-auto flex flex-col items-center justify-center z-2 h-4/5 space-y-4">
+      <div className="md:max-w-xl mx-auto flex flex-col items-center justify-center z-2 h-4/5 space-y-4">
         <Logo />
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-4">
           <Input
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
             type="submit"
             className="flex justify-center items-center space-x-2 bg-gray-800 hover:bg-gray-900 px-4 py-3 rounded-md w-2/5 text-white text-2xl focus:outline-none"
           >
-            <p>Go</p>
+            <p className="text-white">Go</p>
             <svg
               className="w-6 h-6"
               fill="none"

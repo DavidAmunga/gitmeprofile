@@ -8,7 +8,7 @@ interface Props {
 const Profile = ({ profile }: Props): JSX.Element => {
   // console.log(format(profile.created_at, 'yyyy-MM-dd'))
   return (
-    <div className="flex xs:flex-col md:flex-row space-x-4">
+    <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 justify-start">
       <img
         width={150}
         height={150}
@@ -16,7 +16,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
         className="rounded-full border-8 border-gray-1000 dark:border-gray-200"
         src={profile.avatar_url}
       />
-      <div className="w-2/3 flex flex-col space-y-2">
+      <div className="w-full md:w-2/3 flex flex-col space-y-2">
         <h1>
           {profile.name}{' '}
           <a
@@ -30,7 +30,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
         </h1>
 
         <p className="py-4">{profile.bio}</p>
-        <div className="flex justify-between">
+        <div className="flex flex-col space-y-2 md:space-x-4 md:flex-row md:justify-between">
           {/* Company */}
           <div className="text-base space-x-2 flex items-center text-gray-1000 dark:text-white">
             <svg
