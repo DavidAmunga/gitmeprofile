@@ -2,10 +2,18 @@ import Head from 'next/head'
 import React from 'react'
 import Input from '../components/Input'
 import Logo from '../components/Logo'
+import Router from 'next/router'
 
 const Home: React.FC = () => {
+  const [profile, setProfile] = React.useState<string | null>(null)
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setProfile(e.target.value)
+  }
+
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault()
+    Router.push({ pathname: '/user', query: { id: profile } })
   }
   return (
     <div className="bg-gray-1000 w-screen h-screen relative backdrop-filter backdrop-saturate-125">
@@ -21,6 +29,7 @@ const Home: React.FC = () => {
             name="profile"
             className="mt-4 w-2/3"
             placeholder="Enter your Github Profile Name"
+            onChange={onChange}
           />
 
           {/* Submit Button */}
