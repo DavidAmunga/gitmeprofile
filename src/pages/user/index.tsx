@@ -5,6 +5,9 @@ import { Octokit } from '@octokit/core'
 import { UserProfile } from '~/entities/UserProfile'
 import Profile from '~/components/Profile'
 import Header from '~/components/Header'
+import * as GhPolyglot from 'gh-polyglot'
+import { LangStat } from '~/entities/LangStats/LangStat'
+import { Repo } from '~/entities/Repo'
 
 type UserPageProps = {
   error?: string
@@ -12,6 +15,28 @@ type UserPageProps = {
 }
 
 const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
+  const [langStats, setLangStats] = React.useState<LangStat[] | null>(null)
+
+  // Get Language Stats
+  const getLangStats = async (id: string): Promise<void> => {
+    const gitStats = new GhPolyglot(`${id}`)
+
+    gitStats.userStats((err: unknown, stats: LangStat[]) => {
+      if (err) {
+        console.error(err)
+      }
+      console.log(langStats)
+      setLangStats(stats)
+    })
+  }
+
+  React.useEffect(() => {
+    if (profile) {
+      getLangStats(profile.login)
+    }
+    // eslint-disable-next-line
+  }, [profile])
+
   if (error) {
     return <div>User Profile not found</div>
   }
@@ -50,7 +75,11 @@ export const getServerSideProps: GetServerSideProps = async (
     const octokit = new Octokit()
     const userInfoResponse = await octokit.request(`GET /users/${id}`)
     const userProfile: UserProfile = userInfoResponse.data
-    // console.log(repoStats)
+
+    const reposResponse = await octokit.request(`GET /users/${id}/repos?per_page=100`)
+    const repoStats: Repo[] = reposResponse.data
+
+    console.log(repoStats)
     return {
       props: {
         profile: userProfile,
