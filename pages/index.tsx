@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 
-const Home = (): JSX.Element => {
+const Home: React.FC = () => {
   return (
     <div>
       <Head>
