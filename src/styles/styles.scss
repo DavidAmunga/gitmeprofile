@@ -1,0 +1,31 @@
+
+
+
+
+body{
+  @apply bg-gray-100;
+}
+
+
+@layer components{
+  .bg-home{
+    @apply bg-black h-full w-full absolute top-0 left-0;
+  }
+  
+  .btn{
+    @apply select-none flex items-center justify-center px-4 py-2 space-x-2 text-sm font-medium transition-shadow bg-white border rounded shadow-sm hover:border-gray-300 dark:border-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:border-gray-600 focus:outline-none text-primary cursor-pointer;
+  }
+
+  .btn-disabled{
+    @apply bg-gray-200 text-gray-300 cursor-not-allowed;
+  }
+
+}
+
+
+// Custom Utilities
+@layer utilities{
+  .text-primary{
+    @apply text-gray-1000;
+  }
+}
