@@ -8,6 +8,6 @@ type Props = {
   type?: string
 } & React.ComponentPropsWithoutRef<'button'>
 
-export default function Button({ className, ...rest }: Props): JSX.Element {
-  return <button className={`btn ${className}`} {...rest} />
+export default function Button({ onClick, className, ...rest }: Props): JSX.Element {
+  return <button onClick={onClick} className={`btn ${className}`} {...rest} />
 }
