@@ -64,7 +64,7 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
       }
       const allRepos = await Promise.all(allReposPromises)
       let commits: CommitResponse[] = []
-      for (const repo of allRepos[0].splice(1, 4)) {
+      for (const repo of allRepos[0]) {
         const _commits = await getRepoCommits(repo.name)
         commits = commits.concat(_commits)
       }
