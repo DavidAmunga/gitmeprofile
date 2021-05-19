@@ -122,7 +122,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
             <div className="text-gray-1000 dark:text-white font-bold text-3xl">
               {profile.public_repos}
             </div>
-            <div className="tracking-tight text-gray-400 text-md">REPOSITORIES</div>
+            <div className="tracking-wider text-gray-400 text-md">REPOSITORIES</div>
           </a>
         </Card>
         {/* Followers No */}
@@ -136,7 +136,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
             <div className="text-gray-1000 dark:text-white font-bold text-3xl">
               {profile.followers}
             </div>
-            <div className="tracking-tight text-gray-400 text-md">FOLLOWERS</div>
+            <div className="tracking-wider text-gray-400 text-md">FOLLOWERS</div>
           </a>
         </Card>
         <Card className="px-10 py-4 cursor-pointer">
@@ -149,7 +149,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
             <div className="text-gray-1000 dark:text-white font-bold text-3xl">
               {profile.following}
             </div>
-            <div className="tracking-tight text-gray-400 text-md">FOLLOWING</div>
+            <div className="tracking-wider text-gray-400 text-md">FOLLOWING</div>
           </a>
         </Card>
       </div>

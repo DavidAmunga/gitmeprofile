@@ -9,7 +9,10 @@ import * as GhPolyglot from 'gh-polyglot'
 import { LangStat } from '~/entities/LangStats/LangStat'
 import { Repo } from '~/entities/Repo'
 import RequestCount from '~/components/RequestCount'
-import CommitChart from '~/components/CommitChart'
+import LangStats from '../../components/LangStats'
+import MostStarredRepoChart from '~/components/MostStarredRepoChart'
+import MostStarredLanguageChart from '~/components/MostStarredLanguageChart'
+// import CommitChart from '~/components/CommitChart'
 
 type UserPageProps = {
   error?: string
@@ -23,12 +26,10 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
   // Get Language Stats
   const getLangStats = async (id: string): Promise<void> => {
     const gitStats = new GhPolyglot(`${id}`)
-
     gitStats.userStats((err: unknown, stats: LangStat[]) => {
       if (err) {
         console.error(err)
       }
-      console.log(langStats)
       setLangStats(stats)
     })
   }
@@ -37,7 +38,6 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
     const reposResponse = await octokit.request(`GET /users/${id}/repos?per_page=100`)
     const stats: Repo[] = reposResponse.data
     setRepoStats(stats)
-    console.log(repoStats)
   }
 
   React.useEffect(() => {
@@ -65,9 +65,15 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
           <RequestCount />
 
           {profile && <Profile profile={profile} />}
-          {/* Commit Chart */}
-          {profile && <CommitChart profile={profile} />}
-          {/* User Stats */}
+          <div className="flex mt-6 justify-between">
+            {/* Repos per Language Stats */}
+            {langStats && <LangStats langStats={langStats} />}
+            {repoStats && <MostStarredLanguageChart repoStats={repoStats} />}
+            {repoStats && <MostStarredRepoChart repoStats={repoStats} />}
+          </div>
+          <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
+
+          {/* List of Repo Stats */}
         </div>
       </div>
     )
@@ -92,40 +98,7 @@ export const getServerSideProps: GetServerSideProps = async (
     const userInfoResponse = await octokit.request(`GET /users/${id}`)
     const userProfile: UserProfile = userInfoResponse.data
     // console.log(userProfile)
-    // const userProfile = {
-    //   login: 'DavidAmunga',
-    //   id: 13674066,
-    //   node_id: 'MDQ6VXNlcjEzNjc0MDY2',
-    //   avatar_url: 'https://avatars.githubusercontent.com/u/13674066?v=4',
-    //   gravatar_id: '',
-    //   url: 'https://api.github.com/users/DavidAmunga',
-    //   html_url: 'https://github.com/DavidAmunga',
-    //   followers_url: 'https://api.github.com/users/DavidAmunga/followers',
-    //   following_url: 'https://api.github.com/users/DavidAmunga/following{/other_user}',
-    //   gists_url: 'https://api.github.com/users/DavidAmunga/gists{/gist_id}',
-    //   starred_url: 'https://api.github.com/users/DavidAmunga/starred{/owner}{/repo}',
-    //   subscriptions_url: 'https://api.github.com/users/DavidAmunga/subscriptions',
-    //   organizations_url: 'https://api.github.com/users/DavidAmunga/orgs',
-    //   repos_url: 'https://api.github.com/users/DavidAmunga/repos',
-    //   events_url: 'https://api.github.com/users/DavidAmunga/events{/privacy}',
-    //   received_events_url: 'https://api.github.com/users/DavidAmunga/received_events',
-    //   type: 'User',
-    //   site_admin: false,
-    //   name: 'David Amunga',
-    //   company: 'Identigate',
-    //   blog: 'https://davidamunga.com',
-    //   location: 'Nairobi',
-    //   email: null,
-    //   hireable: true,
-    //   bio: 'Form follows function. ⚡️ Web and Mobile Engineer 💻',
-    //   twitter_username: 'davidamunga_',
-    //   public_repos: 55,
-    //   public_gists: 0,
-    //   followers: 25,
-    //   following: 8,
-    //   created_at: '2015-08-06T07:17:10Z',
-    //   updated_at: '2021-05-13T08:17:48Z',
-    // }
+
     return {
       props: {
         profile: userProfile,

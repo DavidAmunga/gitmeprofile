@@ -6,6 +6,7 @@ import { UserProfile } from '~/entities/UserProfile'
 
 interface Props {
   profile: UserProfile
+  repoStats: Repo[]
 }
 const CommitChart = ({ profile }: Props): JSX.Element => {
   useEffect(() => {
@@ -18,11 +19,12 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
     const commits: CommitResponse[] = []
     const pageNo: number = Math.ceil(100 / profile.public_repos)
     for (let i = 1; i < pageNo; i++) {
+      console.log('Here')
       const reposResponse = await octokit.request(
         `GET /users/${profile.login}/repos?per_page=100&page=${i}`
       )
       const repoStats: Repo[] = reposResponse.data
-      for (const repo of repoStats.slice()) {
+      for (const repo of repoStats.slice(reposResponse.data.length - 1)) {
         // console.log(repo)
         const octokit = new Octokit()
         const commitsResponse = await octokit.request(
@@ -30,20 +32,19 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
         )
         const commitStats: CommitResponse[] = commitsResponse.data
         // console.log(commitStats)
-        commitStats[0].committer.date
+        console.log(commitStats[0].committer.date)
         commits.push(...commitStats)
       }
+      // const groupedCommits = commits.reduce((accu: CommitResponse, curr: CommitResponse) => {
+      //   console.log(accu.committer.date)
+      //   const dateObj = new Date(curr.committer.date)
+      //   const monthyear = dateObj.toLocaleString('en-us', { month: 'long', year: 'numeric' })
+      //   // if (!accu[monthyear]) accu[monthyear] = { monthyear, entries: 1 }
+      //   // else accu[monthyear].entries++
+      //   return accu
+      // })
+      // console.log(groupedCommits)
     }
-    // const groupedCommits = commits.reduce((accu: CommitResponse, curr: CommitResponse) => {
-    //   console.log(accu.committer.date)
-
-    //   const dateObj = new Date(curr.committer.date)
-    //   const monthyear = dateObj.toLocaleString('en-us', { month: 'long', year: 'numeric' })
-    //   // if (!accu[monthyear]) accu[monthyear] = { monthyear, entries: 1 }
-    //   // else accu[monthyear].entries++
-    //   return accu
-    // })
-    // console.log(groupedCommits)
   }
 
   return <div>Commit Chart</div>
