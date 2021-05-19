@@ -8,6 +8,16 @@ import { ChartData, ChartOptions } from 'chart.js'
 type Props = {
   langStats: LangStat[]
 }
+const options: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+      align: 'center',
+    },
+  },
+}
+
 const LangStats = ({ langStats }: Props): JSX.Element => {
   const [chartData, setChartData] = React.useState<ChartData | null>(null)
   React.useEffect(() => {
@@ -32,15 +42,6 @@ const LangStats = ({ langStats }: Props): JSX.Element => {
     setChartData(chartData)
     // eslint-disable-next-line
   }, [])
-  const options: ChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'right',
-        align: 'center',
-      },
-    },
-  }
 
   return (
     <Card className="p-4">

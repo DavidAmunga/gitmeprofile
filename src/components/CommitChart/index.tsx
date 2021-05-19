@@ -10,6 +10,7 @@ import { Line } from 'react-chartjs-2'
 interface Props {
   profile: UserProfile
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CommitObj = { [key: string]: any }
 
 const options: ChartOptions = {
@@ -48,7 +49,7 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
     return commitStats
   }
 
-  const getCommitsByUser = async () => {
+  const getCommitsByUser = async (): Promise<void> => {
     // Get All Repositories
     // const octokit = new Octokit()
     // const commits: CommitResponse[] = []
@@ -88,10 +89,10 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
 
     const labels = Object.entries(groupedCommits)
       .filter((value) => value[0] !== 'commit')
-      .map((date) => date[0])
+      .map((obj) => obj[0])
     const data = Object.entries(groupedCommits)
       .filter((value) => value[0] !== 'commit')
-      .map((date) => parseInt(date[1]))
+      .map((obj) => parseInt(obj[1]))
     const chartData: ChartData = {
       labels,
       datasets: [

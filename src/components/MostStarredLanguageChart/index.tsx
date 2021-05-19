@@ -3,10 +3,20 @@ import { Pie } from 'react-chartjs-2'
 import Card from '../Card'
 import { getRandomColor, hexToRgb } from '~/utils/functions'
 import { Repo } from '~/entities/Repo'
-import { ChartData } from 'chart.js'
+import { ChartData, ChartOptions } from 'chart.js'
 type Props = {
   repoStats: Repo[]
 }
+const options: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+      align: 'center',
+    },
+  },
+}
+
 const MostStarredLanguageChart = ({ repoStats }: Props): JSX.Element => {
   const [chartData, setChartData] = React.useState<ChartData | null>(null)
   // console.log(JSON.stringify(repoStats[0]))
@@ -45,7 +55,7 @@ const MostStarredLanguageChart = ({ repoStats }: Props): JSX.Element => {
   return (
     <Card className="p-4">
       <p className="text-lg font-bold">Most Stars per Language</p>
-      {chartData ? <Pie type="" data={chartData} /> : <div></div>}
+      {chartData ? <Pie type="" options={options} data={chartData} /> : <div></div>}
     </Card>
   )
 }

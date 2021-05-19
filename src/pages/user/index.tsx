@@ -16,6 +16,7 @@ import mockUserData from '~/utils/mock/mockUserData'
 import mockRepoData from '~/utils/mock/mockRepoData'
 import mockLangData from '~/utils/mock/mockLangData'
 import CommitChart from '~/components/CommitChart'
+import Footer from '~/components/Footer'
 // import CommitChart from '~/components/CommitChart'
 
 type UserPageProps = {
@@ -91,7 +92,7 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
             {profile && <CommitChart profile={profile} />}
           </div>
 
-          {/* List of Repo Stats */}
+          <Footer />
         </div>
       </div>
     )
