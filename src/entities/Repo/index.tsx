@@ -19,14 +19,6 @@ export interface Owner {
   site_admin: boolean
 }
 
-export interface License {
-  key: string
-  name: string
-  spdx_id: string
-  url: string
-  node_id: string
-}
-
 export interface Repo {
   id: number
   node_id: string
@@ -74,9 +66,9 @@ export interface Repo {
   labels_url: string
   releases_url: string
   deployments_url: string
-  created_at: Date
-  updated_at: Date
-  pushed_at: Date
+  created_at: string
+  updated_at: string
+  pushed_at: string
   git_url: string
   ssh_url: string
   clone_url: string
@@ -96,7 +88,6 @@ export interface Repo {
   archived: boolean
   disabled: boolean
   open_issues_count: number
-  license: License
   forks: number
   open_issues: number
   watchers: number

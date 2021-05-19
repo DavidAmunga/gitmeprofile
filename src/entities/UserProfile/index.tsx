@@ -28,7 +28,6 @@ export interface UserProfile {
   company: string
   blog: string
   location: string
-  email: string
   hireable: boolean
   bio: string
   twitter_username: string
@@ -36,7 +35,7 @@ export interface UserProfile {
   public_gists: number
   followers: number
   following: number
-  created_at: Date
-  updated_at: Date
-  plan: Plan
+  created_at: string
+  updated_at: string
+  plan?: Plan
 }

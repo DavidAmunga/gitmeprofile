@@ -19,7 +19,6 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
     const commits: CommitResponse[] = []
     const pageNo: number = Math.ceil(100 / profile.public_repos)
     for (let i = 1; i < pageNo; i++) {
-      console.log('Here')
       const reposResponse = await octokit.request(
         `GET /users/${profile.login}/repos?per_page=100&page=${i}`
       )

@@ -12,6 +12,9 @@ import RequestCount from '~/components/RequestCount'
 import LangStats from '../../components/LangStats'
 import MostStarredRepoChart from '~/components/MostStarredRepoChart'
 import MostStarredLanguageChart from '~/components/MostStarredLanguageChart'
+import mockUserData from '~/utils/mock/mockUserData'
+import mockRepoData from '~/utils/mock/mockRepoData'
+import mockLangData from '~/utils/mock/mockLangData'
 // import CommitChart from '~/components/CommitChart'
 
 type UserPageProps = {
@@ -25,19 +28,31 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
 
   // Get Language Stats
   const getLangStats = async (id: string): Promise<void> => {
-    const gitStats = new GhPolyglot(`${id}`)
-    gitStats.userStats((err: unknown, stats: LangStat[]) => {
-      if (err) {
-        console.error(err)
-      }
+    if (process.env.NODE_ENV !== 'production') {
+      const stats = mockLangData
       setLangStats(stats)
-    })
+    } else {
+      const gitStats = new GhPolyglot(`${id}`)
+      gitStats.userStats((err: unknown, stats: LangStat[]) => {
+        if (err) {
+          console.error(err)
+        }
+        setLangStats(stats)
+      })
+    }
   }
   const getRepoStats = async (id: string): Promise<void> => {
-    const octokit = new Octokit()
-    const reposResponse = await octokit.request(`GET /users/${id}/repos?per_page=100`)
-    const stats: Repo[] = reposResponse.data
-    setRepoStats(stats)
+    let stats: Repo[]
+    if (process.env.NODE_ENV !== 'production') {
+      stats = mockRepoData
+      setRepoStats(stats)
+    } else {
+      const octokit = new Octokit()
+      const reposResponse = await octokit.request(`GET /users/${id}/repos?per_page=100`)
+      stats = reposResponse.data
+      // console.log(stats)
+      setRepoStats(stats)
+    }
   }
 
   React.useEffect(() => {
@@ -52,13 +67,13 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
     return <div>User Profile not found</div>
   } else {
     return (
-      <div className="w-screen h-screen">
+      <div className="w-full h-full">
         <Head>
           <title>GitMeProfile</title>
           <meta name="description" content="Neat Github Stats Profile" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="w-screen md:max-w-6xl mx-auto py-4 md:py-8 px-8 md:px-1 ">
+        <div className="w-full md:max-w-6xl mx-auto py-4 md:py-8 px-8 md:px-1 ">
           {/* Header */}
           <Header />
           {/* Github Requests */}
@@ -94,10 +109,14 @@ export const getServerSideProps: GetServerSideProps = async (
   // Repository stats
   try {
     // User Info
-    const octokit = new Octokit()
-    const userInfoResponse = await octokit.request(`GET /users/${id}`)
-    const userProfile: UserProfile = userInfoResponse.data
-    // console.log(userProfile)
+    let userProfile: UserProfile
+    if (process.env.NODE_ENV !== 'production') {
+      userProfile = mockUserData
+    } else {
+      const octokit = new Octokit()
+      const userInfoResponse = await octokit.request(`GET /users/${id}`)
+      userProfile = userInfoResponse.data
+    }
 
     return {
       props: {
