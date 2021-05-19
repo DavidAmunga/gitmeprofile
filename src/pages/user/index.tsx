@@ -15,6 +15,7 @@ import MostStarredLanguageChart from '~/components/MostStarredLanguageChart'
 import mockUserData from '~/utils/mock/mockUserData'
 import mockRepoData from '~/utils/mock/mockRepoData'
 import mockLangData from '~/utils/mock/mockLangData'
+import CommitChart from '~/components/CommitChart'
 // import CommitChart from '~/components/CommitChart'
 
 type UserPageProps = {
@@ -86,7 +87,9 @@ const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
             {repoStats && <MostStarredLanguageChart repoStats={repoStats} />}
             {repoStats && <MostStarredRepoChart repoStats={repoStats} />}
           </div>
-          <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
+          <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full">
+            {profile && <CommitChart profile={profile} />}
+          </div>
 
           {/* List of Repo Stats */}
         </div>

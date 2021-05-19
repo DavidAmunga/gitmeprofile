@@ -7,7 +7,7 @@ export interface Author {
 export interface Committer {
   name: string
   email: string
-  date: Date
+  date: string
 }
 
 export interface Tree {
