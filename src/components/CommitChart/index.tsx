@@ -34,7 +34,7 @@ const CommitChart = ({ profile }: Props): JSX.Element => {
       `GET /users/${profile.login}/repos?per_page=100&page=${pageNo}`
     )
 
-    const repos: Repo[] = reposResponse.data.filter((repo: Repo) => !repo.fork)
+    const repos: Repo[] = reposResponse.data.filter((repo: Repo) => !repo.fork && repo.size > 0)
 
     return repos
   }
