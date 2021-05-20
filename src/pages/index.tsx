@@ -1,20 +1,26 @@
 import Head from 'next/head'
+import Router from 'next/router'
 import React from 'react'
 import Input from '../components/Input'
 import Logo from '../components/Logo'
-import Router from 'next/router'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 
-const Home: React.FC = () => {
-  const [profile, setProfile] = React.useState<string | null>(null)
+type HomeProps = {
+  error?: string | null
+}
+
+const Home = ({ error }: HomeProps): JSX.Element => {
+  const [userName, setUsername] = React.useState<string>('')
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setProfile(e.target.value)
+    setUsername(e.target.value)
   }
 
-  const handleSubmit = (e: React.SyntheticEvent): void => {
+  const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault()
-    Router.push({ pathname: '/user', query: { id: profile } })
+    Router.push({ pathname: '/user', query: { userName } })
   }
+
   return (
     <div className="bg-gray-1000 w-screen h-screen relative backdrop-filter backdrop-saturate-125">
       <Head>
@@ -24,6 +30,12 @@ const Home: React.FC = () => {
       </Head>
       <div className="md:max-w-xl mx-auto flex flex-col items-center justify-center z-2 h-4/5 space-y-4">
         <Logo />
+        {error && (
+          <div className="flex">
+            <div className="text-4xl">{error}</div>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="w-full flex flex-col items-center space-y-4">
           <Input
             name="profile"
@@ -59,4 +71,23 @@ const Home: React.FC = () => {
   )
 }
 
+// Check For Errors
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { error } = context.query
+
+  // No Github Username
+  if (!error || error.length == 0) {
+    return {
+      props: {},
+    }
+  } else {
+    return {
+      props: {
+        error,
+      },
+    }
+  }
+}
 export default Home

@@ -4,6 +4,7 @@ import '~/styles/tailwind.scss'
 import { ThemeProvider, useTheme } from 'next-themes'
 import 'tailwindcss/utilities.css'
 import '~/styles/styles.scss'
+import { AppProvider } from '~/context/AppContext'
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const { theme, setTheme } = useTheme()
   const [isMounted, setMounted] = React.useState(false)
@@ -26,9 +27,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
    }, [])
 
   return (
-    <ThemeProvider defaultTheme="light" enableSystem={false} attribute="class">
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider defaultTheme="light" enableSystem={false} attribute="class">
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </AppProvider>
   )
 }
 

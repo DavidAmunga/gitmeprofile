@@ -1,133 +1,111 @@
 import React from 'react'
 import Head from 'next/head'
+import Router from 'next/router'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { Octokit } from '@octokit/core'
-import { UserProfile } from '~/entities/UserProfile'
 import Profile from '~/components/Profile'
 import Header from '~/components/Header'
-import * as GhPolyglot from 'gh-polyglot'
-import { LangStat } from '~/entities/LangStats/LangStat'
-import { Repo } from '~/entities/Repo'
 import RequestCount from '~/components/RequestCount'
 import LangStats from '../../components/LangStats'
 import MostStarredRepoChart from '~/components/MostStarredRepoChart'
 import MostStarredLanguageChart from '~/components/MostStarredLanguageChart'
-import mockUserData from '~/utils/mock/mockUserData'
-import mockRepoData from '~/utils/mock/mockRepoData'
-import mockLangData from '~/utils/mock/mockLangData'
-import CommitChart from '~/components/CommitChart'
 import Footer from '~/components/Footer'
-// import CommitChart from '~/components/CommitChart'
+// import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
+import { getGithubData, isRateLimitOk } from '~/utils/functions'
+import { IProfile, useAppContext } from '~/context/AppContext'
+import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
 
 type UserPageProps = {
-  error?: string
-  profile?: UserProfile
+  profile: IProfile
+  error?: string | null
 }
 
-const UserPage = ({ error, profile }: UserPageProps): JSX.Element => {
-  const [langStats, setLangStats] = React.useState<LangStat[] | null>(null)
-  const [repoStats, setRepoStats] = React.useState<Repo[] | null>(null)
-
-  // Get Language Stats
-  const getLangStats = async (id: string): Promise<void> => {
-    if (process.env.NODE_ENV !== 'production') {
-      const stats = mockLangData
-      setLangStats(stats)
-    } else {
-      const gitStats = new GhPolyglot(`${id}`)
-      gitStats.userStats((err: unknown, stats: LangStat[]) => {
-        if (err) {
-          console.error(err)
-        }
-        setLangStats(stats)
-      })
-    }
-  }
-  const getRepoStats = async (id: string): Promise<void> => {
-    let stats: Repo[]
-    if (process.env.NODE_ENV !== 'production') {
-      stats = mockRepoData
-      setRepoStats(stats)
-    } else {
-      const octokit = new Octokit()
-      const reposResponse = await octokit.request(`GET /users/${id}/repos?per_page=100`)
-      stats = reposResponse.data
-      // console.log(stats)
-      setRepoStats(stats)
-    }
-  }
-
+const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
+  const appContext = useAppContext()
   React.useEffect(() => {
-    if (profile) {
-      getLangStats(profile.login)
-      getRepoStats(profile.login)
+    if (appContext && profile) {
+      // Check If Initial Profile is Null
+      const initialUserProfile = appContext.profile.profile
+      if (!initialUserProfile) {
+        appContext.setUserProfile(profile)
+      }
     }
     // eslint-disable-next-line
-  }, [profile])
+  }, [appContext,profile])
+  
 
-  if (error && !profile) {
-    return <div>User Profile not found</div>
-  } else {
-    return (
-      <div className="w-full h-full">
-        <Head>
-          <title>GitMeProfile</title>
-          <meta name="description" content="Neat Github Stats Profile" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <div className="w-full md:max-w-6xl mx-auto py-4 md:py-8 px-8 md:px-1 ">
-          {/* Header */}
-          <Header />
-          {/* Github Requests */}
-          <RequestCount />
+  React.useEffect(() => {
+    if (error) {
+      Router.push({ pathname: '/', query: { error } })
+    }
+    // eslint-disable-next-line
+  }, [error])
+  return (
+    <div className="w-full h-full">
+      <Head>
+        <title>GitMeProfile</title>
+        <meta name="description" content="Neat Github Stats Profile" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="w-full md:max-w-6xl mx-auto py-4 md:py-8 px-8 md:px-1 ">
+        {/* Header */}
+        <Header />
 
-          {profile && <Profile profile={profile} />}
-          <div className="flex mt-6 justify-between">
-            {/* Repos per Language Stats */}
-            {langStats && <LangStats langStats={langStats} />}
-            {repoStats && <MostStarredLanguageChart repoStats={repoStats} />}
-            {repoStats && <MostStarredRepoChart repoStats={repoStats} />}
-          </div>
-          <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full">
-            {profile && <CommitChart profile={profile} />}
-          </div>
-
-          <Footer />
+        {/* Github Requests */}
+        <RequestCount />
+        <Profile />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 mt-6">
+          {/* Repos per Language Stats */}
+          <LangStats />
+          <MostStarredLanguageChart />
+          <MostStarredRepoChart />
         </div>
+        {/* Divider */}
+        <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
+        {/* <MostCommitsRepoChart /> */}
+        <div className="w-full mt-6 justify-between">
+          <MostCommitsRepoChart />
+        </div>
+        <Footer />
       </div>
-    )
-  }
-}
-
-interface QueryProps {
-  // Github Profile Username
-  id?: string
+    </div>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { id }: QueryProps = context.query
+  const { userName } = context.query
 
-  // Repo Stats
-  // Repository stats
-  try {
-    // User Info
-    let userProfile: UserProfile
-    if (process.env.NODE_ENV !== 'production') {
-      userProfile = mockUserData
-    } else {
-      const octokit = new Octokit()
-      const userInfoResponse = await octokit.request(`GET /users/${id}`)
-      userProfile = userInfoResponse.data
-    }
-
+  // No Github Username
+  if (!userName || userName.length == 0) {
     return {
       props: {
-        profile: userProfile,
+        profile: null,
+        error: 'No Github Username',
+      },
+    }
+  }
+  const rateLimitStatusData = await isRateLimitOk()
+  if (!rateLimitStatusData) {
+    return {
+      props: {
+        profile: null,
+        error: 'Ooops! Rate Limit Exceeded. Try again in an hour',
+      },
+    }
+  }
+  // Repo Stats
+  // Repository stats
+  const profile = await getGithubData(userName.toString())
+  try {
+    return {
+      props: {
+        profile: profile,
+        error: null,
       },
     }
   } catch (error) {
+    console.log(error)
     return {
       props: {
         error: 'Failed to Fetch profile',

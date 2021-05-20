@@ -1,13 +1,16 @@
 import { format, parseISO } from 'date-fns'
 import { Twitter } from 'react-feather'
-import { UserProfile } from '~/entities/UserProfile'
+import { useAppContext } from '~/context/AppContext'
 import Card from '../Card'
-interface Props {
-  profile: UserProfile
-}
+import ProfileLoader from './loader'
 
-const Profile = ({ profile }: Props): JSX.Element => {
+const Profile = (): JSX.Element => {
   // console.log(format(profile.created_at, 'yyyy-MM-dd'))
+  const appContext = useAppContext()
+  const profile = appContext.profile.profile
+  if (!profile) {
+    return <ProfileLoader />
+  }
   return (
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 justify-start">
@@ -110,7 +113,7 @@ const Profile = ({ profile }: Props): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="grid md:grid-cols-3 gap-12">
         {/* Repositories No */}
         <Card className="px-10 py-4 cursor-pointer">
           <a

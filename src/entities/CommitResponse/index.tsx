@@ -1,7 +1,7 @@
 export interface Author {
   name: string
   email: string
-  date: Date
+  date: string
 }
 
 export interface Committer {
@@ -11,26 +11,28 @@ export interface Committer {
 }
 
 export interface Tree {
-  url: string
   sha: string
+  url: string
 }
 
 export interface Verification {
   verified: boolean
   reason: string
+  signature: string | null
+  payload: string | null
 }
 
 export interface Commit {
-  url: string
   author: Author
   committer: Committer
   message: string
   tree: Tree
+  url: string
   comment_count: number
   verification: Verification
 }
 
-export interface Author {
+export interface Author2 {
   login: string
   id: number
   node_id: string
@@ -51,7 +53,7 @@ export interface Author {
   site_admin: boolean
 }
 
-export interface Committer {
+export interface Committer2 {
   login: string
   id: number
   node_id: string
@@ -73,18 +75,19 @@ export interface Committer {
 }
 
 export interface Parent {
-  url: string
   sha: string
+  url: string
+  html_url: string
 }
 
 export interface CommitResponse {
-  url: string
   sha: string
   node_id: string
+  commit: Commit
+  url: string
   html_url: string
   comments_url: string
-  commit: Commit
-  author: Author
-  committer: Committer
+  author: Author2 | null
+  committer: Committer2 | null
   parents: Parent[]
 }
