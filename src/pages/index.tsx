@@ -31,8 +31,8 @@ const Home = ({ error }: HomeProps): JSX.Element => {
       <div className="md:max-w-xl mx-auto flex flex-col items-center justify-center z-2 h-4/5 space-y-4">
         <Logo />
         {error && (
-          <div className="flex">
-            <div className="text-4xl">{error}</div>
+          <div className="flex bg-gray-900 justify-center p-3 rounded-sm">
+            <div className="text-4xl text-green-600 ">{error}</div>
           </div>
         )}
 
@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const { error } = context.query
 
   // No Github Username
-  if (!error || error.length == 0) {
+  if (!error || error.toString().length == 0) {
     return {
       props: {},
     }

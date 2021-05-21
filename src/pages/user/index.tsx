@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import Router from 'next/router'
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { useRouter } from 'next/router'
 import Profile from '~/components/Profile'
 import Header from '~/components/Header'
 import RequestCount from '~/components/RequestCount'
@@ -17,26 +16,52 @@ import MostCommitsLanguageChart from '~/components/MostCommitsLanguageChart'
 
 type UserPageProps = {
   profile: IProfile
-  error?: string | null
 }
 
-const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
+const UserPage = ({ profile }: UserPageProps): JSX.Element => {
   const appContext = useAppContext()
+  // const [loading, setLoading] = React.useState<boolean>(false)
+  const [error, setError] = React.useState<string | null>(null)
+  const router = useRouter()
   React.useEffect(() => {
     if (appContext && profile) {
       // Check If Initial Profile is Null
       const initialUserProfile = appContext.profile.profile
       if (!initialUserProfile) {
+        getUserProfile()
         appContext.setUserProfile(profile)
       }
     }
     // eslint-disable-next-line
   }, [appContext,profile])
-  
+
+
+  React.useEffect(() => {
+    getUserProfile()
+    // eslint-disable-next-line
+  }, [])
+
+  const getUserProfile = async (): Promise<void> => {
+    const { userName } = router.query
+    // eslint-disable-next-line
+    // No Github Username
+    if (!userName || userName.length == 0) {
+      setError('No Github Username')
+      return
+    }
+    const rateLimitStatusData = await isRateLimitOk()
+    if (!rateLimitStatusData) {
+      setError('Ooops! Rate Limit Exceeded. Try again in an hour')
+      return
+    }
+    // Repository stats
+    const profile = await getGithubData(userName.toString())
+    appContext.setUserProfile(profile)
+  }
 
   React.useEffect(() => {
     if (error) {
-      Router.push({ pathname: '/', query: { error } })
+      router.push('/')
     }
     // eslint-disable-next-line
   }, [error])
@@ -71,49 +96,6 @@ const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
       </div>
     </div>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { userName } = context.query
-
-  // No Github Username
-  if (!userName || userName.length == 0) {
-    return {
-      props: {
-        profile: null,
-        error: 'No Github Username',
-      },
-    }
-  }
-  const rateLimitStatusData = await isRateLimitOk()
-  if (!rateLimitStatusData) {
-    return {
-      props: {
-        profile: null,
-        error: 'Ooops! Rate Limit Exceeded. Try again in an hour',
-      },
-    }
-  }
-  // Repo Stats
-  // Repository stats
-  const profile = await getGithubData(userName.toString())
-  try {
-    return {
-      props: {
-        profile: profile,
-        error: null,
-      },
-    }
-  } catch (error) {
-    console.log(error)
-    return {
-      props: {
-        error: 'Failed to Fetch profile',
-      },
-    }
-  }
 }
 
 export default UserPage
