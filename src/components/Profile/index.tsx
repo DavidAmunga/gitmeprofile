@@ -33,7 +33,7 @@ const Profile = (): JSX.Element => {
           </h1>
 
           <p className="py-4">{profile.bio}</p>
-          <div className="grid grid-flow-col auto-cols-max space-y-2 md:space-x-4 md:flex-row md:justify-between">
+          <div className="w-2/3 flex flex-col space-y-2 md:space-x-4 md:flex-row md:justify-between">
             {/* Company */}
             {profile.company && (
               <div className="text-base space-x-2 flex items-center text-gray-1000 dark:text-white">
