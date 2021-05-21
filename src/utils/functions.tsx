@@ -43,10 +43,10 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
     params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
   })
   const commitsStats = commitsData.data
-  const commitsLanguagesData = await axios.get(`${getBaseUrl()}/api/commits-languages`, {
-    params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
-  })
-  const commitsLanguagesStats = commitsLanguagesData.data
+  // const commitsLanguagesData = await axios.get(`${getBaseUrl()}/api/commits-languages`, {
+  //   params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
+  // })
+  // const commitsLanguagesStats = commitsLanguagesData.data
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)
@@ -56,7 +56,7 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
     langStats,
     repos: repoStats,
     commits: commitsStats,
-    commitsLanguage: commitsLanguagesStats,
+    commitsLanguage: null,
   }
   return _profile
 }
