@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = (): JSX.Element => {
   return (
     <div className="fixed w-full bottom-0 left-0 bg-white dark:bg-gray-800 p-2 flex justify-center border-t-2 border-gray-200 dark:border-gray-600">
-      <div>
+      <div className="text-center">
         GitMeProfile is built with{' '}
         <a className="text-blue-600" href="https://nextjs.com">
           Next.JS

@@ -4,6 +4,7 @@ import Card from '../Card'
 import { generateChartColors } from '~/utils/functions'
 import { ChartData, ChartOptions } from 'chart.js'
 import { useAppContext } from '~/context/AppContext'
+import MostStarredRepoChartLoader from './loader'
 
 const options: ChartOptions = {
   responsive: true,
@@ -53,7 +54,7 @@ const MostStarredRepoChart = (): JSX.Element => {
   }, [repos])
 
   if (!repos) {
-    return <></>
+    return <MostStarredRepoChartLoader />
   }
   return (
     <Card className="p-4">

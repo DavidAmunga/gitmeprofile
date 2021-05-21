@@ -4,6 +4,7 @@ import Card from '../Card'
 import { Doughnut } from 'react-chartjs-2'
 import { useAppContext } from '~/context/AppContext'
 import { generateChartColors } from '~/utils/functions'
+import MostCommitsLanguageChartLoader from '../MostCommitsLanguageChart/loader'
 
 type RepoCommits = {
   count: number
@@ -72,7 +73,7 @@ const MostCommitsRepoChart = (): JSX.Element => {
     }
   }
 
-  if (!commits && !repos) return <></>
+  if (!commits && !repos) return <MostCommitsLanguageChartLoader />
   return (
     <Card className="p-4 mt-4">
       <p className="text-lg font-bold">Commits Per Repo (Top 10)</p>

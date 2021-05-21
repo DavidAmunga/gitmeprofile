@@ -34,7 +34,7 @@ const defaultState: AppContextType = {
 
 const AppContext = createContext<AppContextType>(defaultState)
 
-export function useAppContext() {
+export function useAppContext(): AppContextType {
   return useContext(AppContext)
 }
 

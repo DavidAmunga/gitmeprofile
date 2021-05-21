@@ -4,6 +4,7 @@ import Card from '../Card'
 import { generateChartColors } from '~/utils/functions'
 import { ChartData, ChartOptions } from 'chart.js'
 import { useAppContext } from '~/context/AppContext'
+import MostStarredLanguageChartLoader from './loader'
 
 const options: ChartOptions = {
   responsive: true,
@@ -61,7 +62,7 @@ const MostStarredLanguageChart = (): JSX.Element => {
     // eslint-disable-next-line
   }, [repos])
 
-  if (!repos) return <></>
+  if (!repos) return <MostStarredLanguageChartLoader />
   return (
     <Card className="p-4">
       <p className="text-lg font-bold">Most Stars per Language</p>

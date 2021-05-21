@@ -4,6 +4,7 @@ import Card from '../Card'
 import { Doughnut } from 'react-chartjs-2'
 import { useAppContext } from '~/context/AppContext'
 import { generateChartColors } from '~/utils/functions'
+import MostCommitsLanguageChartLoader from './loader'
 
 const options: ChartOptions = {
   // responsive: false,
@@ -54,7 +55,7 @@ const MostCommitsLanguageChart = (): JSX.Element => {
     }
   }
 
-  if (!commitsLanguages && !commitsLanguages) return <></>
+  if (!commitsLanguages && !commitsLanguages) return <MostCommitsLanguageChartLoader />
   return (
     <Card className="p-4 mt-4">
       <p className="text-lg font-bold">Commits Per Language</p>
