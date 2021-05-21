@@ -6,7 +6,7 @@ import { UserProfile } from '~/entities/UserProfile'
 import getUserProfile from '~/service/profile'
 import getUserRepos from '~/service/repositories'
 import getUserRepoCommits from '~/service/commits'
-import getUserLanguages from '~/service/languages'
+import getRepoLanguages from '~/service/languages'
 import getUserCommitLanguages from '~/service/commits-languages'
 import { CommitResponse } from '~/entities/CommitResponse'
 import { Repo } from '~/entities/Repo'
@@ -35,9 +35,9 @@ export const getRandomColor = (): string => {
 export const getGithubData = async (userName: string): Promise<IProfile> => {
   const userProfile: UserProfile = await getUserProfile(userName)
   const repos: Repo[] = await getUserRepos(userName)
-  const langStats: LangStat[] = await getUserLanguages(repos)
+  const langStats: LangStat[] = await getRepoLanguages(repos)
   const commits: CommitResponse[] = await getUserRepoCommits(userName, repos)
-  const commitsLanguages = await getUserCommitLanguages(userName, repos, commits)
+  const commitsLanguages = await getUserCommitLanguages(repos, commits)
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)

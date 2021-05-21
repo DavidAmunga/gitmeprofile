@@ -2,7 +2,7 @@ import { LangStat } from '~/entities/LangStats/LangStat'
 import { Repo } from '~/entities/Repo'
 import mockLangData from '~/utils/mock/mockLangData'
 
-const getLanguages = async (repos: Repo[]): Promise<LangStat[]> => {
+const getRepoLanguages = async (repos: Repo[]): Promise<LangStat[]> => {
   if (process.env.NODE_ENV !== 'production') {
     const stats = mockLangData
     return stats
@@ -25,4 +25,4 @@ const getLanguages = async (repos: Repo[]): Promise<LangStat[]> => {
   }
 }
 
-export default getLanguages
+export default getRepoLanguages
