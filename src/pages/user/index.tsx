@@ -54,7 +54,7 @@ const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
         {/* Github Requests */}
         <RequestCount />
         <Profile />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           {/* Repos per Language Stats */}
           <LangStatsChart />
           <MostStarredLanguageChart />
@@ -63,7 +63,7 @@ const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
         {/* Divider */}
         <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
         {/* <MostCommitsRepoChart /> */}
-        <div className="w-full grid md:grid-cols-2 gap-x-4 mt-6">
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
           <MostCommitsRepoChart />
           <MostCommitsLanguageChart />
         </div>
