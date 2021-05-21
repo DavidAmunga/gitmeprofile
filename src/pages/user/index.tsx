@@ -11,8 +11,8 @@ import Footer from '~/components/Footer'
 // import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
 import { getGithubData, isRateLimitOk } from '~/utils/functions'
 import { IProfile, useAppContext } from '~/context/AppContext'
-import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
-import MostCommitsLanguageChart from '~/components/MostCommitsLanguageChart'
+// import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
+// import MostCommitsLanguageChart from '~/components/MostCommitsLanguageChart'
 
 type UserPageProps = {
   profile: IProfile
@@ -91,8 +91,8 @@ const UserPage = ({ profile }: UserPageProps): JSX.Element => {
         <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
         {/* <MostCommitsRepoChart /> */}
         <div className="grid md:grid-cols-2 gap-4 mt-6">
-          <MostCommitsRepoChart />
-          <MostCommitsLanguageChart />
+          {/* <MostCommitsRepoChart /> */}
+          {/* <MostCommitsLanguageChart /> */}
         </div>
         <Footer />
       </div>

@@ -5,10 +5,10 @@ import { RateLimit } from '~/entities/RateLimit'
 import { UserProfile } from '~/entities/UserProfile'
 import getUserProfile from '~/service/profile'
 import getUserRepos from '~/service/repositories'
-import getUserRepoCommits from '~/service/commits'
+// import getUserRepoCommits from '~/service/commits'
 import getRepoLanguages from '~/service/languages'
-import getUserCommitLanguages from '~/service/commits-languages'
-import { CommitResponse } from '~/entities/CommitResponse'
+// import getUserCommitLanguages from '~/service/commits-languages'
+// import { CommitResponse } from '~/entities/CommitResponse'
 import { Repo } from '~/entities/Repo'
 
 export function hexToRgb(hex: string, alpha: string): string {
@@ -36,8 +36,8 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
   const userProfile: UserProfile = await getUserProfile(userName)
   const repos: Repo[] = await getUserRepos(userName)
   const langStats: LangStat[] = await getRepoLanguages(repos)
-  const commits: CommitResponse[] = await getUserRepoCommits(userName, repos)
-  const commitsLanguages = await getUserCommitLanguages(repos, commits)
+  // const commits: CommitResponse[] = await getUserRepoCommits(userName, repos)
+  // const commitsLanguages = await getUserCommitLanguages(repos, commits)
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)
@@ -46,8 +46,8 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
     profile: userProfile,
     langStats,
     repos: repos,
-    commits: commits,
-    commitsLanguage: commitsLanguages,
+    commits: null,
+    commitsLanguage: null,
   }
   return _profile
 }
