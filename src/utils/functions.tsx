@@ -34,10 +34,10 @@ export const getRandomColor = (): string => {
 
 export const getGithubData = async (userName: string): Promise<IProfile> => {
   const userProfile: UserProfile = await getUserProfile(userName)
-  const langStats: LangStat[] = await getUserLanguages(userName)
   const repos: Repo[] = await getUserRepos(userName)
-  const commits: CommitResponse[] = await getUserRepoCommits(userName, userProfile.public_repos)
-  const commitsLanguages = await getUserCommitLanguages(userName, userProfile.public_repos)
+  const langStats: LangStat[] = await getUserLanguages(repos)
+  const commits: CommitResponse[] = await getUserRepoCommits(userName, repos)
+  const commitsLanguages = await getUserCommitLanguages(userName, repos, commits)
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)

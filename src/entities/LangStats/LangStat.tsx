@@ -1,5 +1,4 @@
 export interface LangStat {
-  label: string
-  value: number
-  color: string
+  count: number
+  language: string
 }

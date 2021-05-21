@@ -12,6 +12,10 @@ const options: ChartOptions = {
     legend: {
       position: 'left',
       align: 'center',
+      labels: {
+        boxWidth: 15,
+        boxHeight: 15,
+      },
     },
   },
 }
@@ -23,8 +27,8 @@ const LangStatsChart = (): JSX.Element => {
 
   React.useEffect(() => {
     if (langStats) {
-      const labels = langStats.map((stat) => stat.label)
-      const data = langStats.map((stat) => stat.value)
+      const labels = langStats.map((stat) => stat.language)
+      const data = langStats.map((stat) => stat.count)
       const colors = generateChartColors(data.length)
 
       const chartData: ChartData = {
