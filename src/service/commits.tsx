@@ -22,7 +22,7 @@ const getCommitsByUser = async (userName: string, repos: Repo[]): Promise<Commit
 
   let commitsResponse: CommitResponse[] = []
 
-  if (process.env.NODE_ENV == 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     commitsResponse = mockCommitResponses
   } else {
     for (const repo of repos) {
