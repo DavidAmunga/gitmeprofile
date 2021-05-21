@@ -1,4 +1,4 @@
-import { GhPolyglot } from 'gh-polyglot'
+import GhPolyglot from 'gh-polyglot'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { LangStat } from '~/entities/LangStats/LangStat'
 import mockLangData from '~/utils/mock/mockLangData'
