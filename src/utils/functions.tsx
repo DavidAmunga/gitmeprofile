@@ -3,6 +3,13 @@ import { IProfile } from '~/context/AppContext'
 import { LangStat } from '~/entities/LangStats/LangStat'
 import { RateLimit } from '~/entities/RateLimit'
 import { UserProfile } from '~/entities/UserProfile'
+import getUserProfile from '~/service/profile'
+import getUserRepos from '~/service/repositories'
+import getUserRepoCommits from '~/service/commits'
+import getUserLanguages from '~/service/languages'
+import getUserCommitLanguages from '~/service/commits-languages'
+import { CommitResponse } from '~/entities/CommitResponse'
+import { Repo } from '~/entities/Repo'
 
 export function hexToRgb(hex: string, alpha: string): string {
   hex = hex.replace('#', '')
@@ -27,26 +34,12 @@ export const getRandomColor = (): string => {
 
 export const getGithubData = async (userName: string): Promise<IProfile> => {
   console.log(getBaseUrl())
-  const userProfileData = await axios.get(`${getBaseUrl()}/api/profile`, {
-    params: { userName: userName ?? '' },
-  })
-  const userProfile: UserProfile = userProfileData.data
-  const langStatsData = await axios.get(`${getBaseUrl()}/api/languages`, {
-    params: { userName: userName ?? '' },
-  })
-  const langStats: LangStat[] = langStatsData.data
-  const repoStatsData = await axios.get(`${getBaseUrl()}/api/repositories`, {
-    params: { userName: userName ?? '' },
-  })
-  const repoStats = repoStatsData.data
-  // const commitsData = await axios.get(`${getBaseUrl()}/api/commits`, {
-  //   params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
-  // })
-  // const commitsStats = commitsData.data
-  // const commitsLanguagesData = await axios.get(`${getBaseUrl()}/api/commits-languages`, {
-  //   params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
-  // })
-  // const commitsLanguagesStats = commitsLanguagesData.data
+
+  const userProfile: UserProfile = await getUserProfile(userName)
+  const langStats: LangStat[] = await getUserLanguages(userName)
+  const repos: Repo[] = await getUserRepos(userName)
+  const commits: CommitResponse[] = await getUserRepoCommits(userName, userProfile.public_repos)
+  const commitsLanguages = await getUserCommitLanguages(userName, userProfile.public_repos)
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)
@@ -54,9 +47,9 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
   const _profile: IProfile = {
     profile: userProfile,
     langStats,
-    repos: repoStats,
-    commits: null,
-    commitsLanguage: null,
+    repos: repos,
+    commits: commits,
+    commitsLanguage: commitsLanguages,
   }
   return _profile
 }
