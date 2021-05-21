@@ -26,24 +26,24 @@ export const getRandomColor = (): string => {
 }
 
 export const getGithubData = async (userName: string): Promise<IProfile> => {
-  const userProfileData = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profile`, {
+  const userProfileData = await axios.get(`${process.env.PUBLIC_API_URL}/api/profile`, {
     params: { userName: userName ?? '' },
   })
   const userProfile: UserProfile = userProfileData.data
-  const langStatsData = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/languages`, {
+  const langStatsData = await axios.get(`${process.env.PUBLIC_API_URL}/api/languages`, {
     params: { userName: userName ?? '' },
   })
   const langStats: LangStat[] = langStatsData.data
-  const repoStatsData = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/repositories`, {
+  const repoStatsData = await axios.get(`${process.env.PUBLIC_API_URL}/api/repositories`, {
     params: { userName: userName ?? '' },
   })
   const repoStats = repoStatsData.data
-  const commitsData = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/commits`, {
+  const commitsData = await axios.get(`${process.env.PUBLIC_API_URL}/api/commits`, {
     params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
   })
   const commitsStats = commitsData.data
   const commitsLanguagesData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/commits-languages`,
+    `${process.env.PUBLIC_API_URL}/api/commits-languages`,
     {
       params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
     }
