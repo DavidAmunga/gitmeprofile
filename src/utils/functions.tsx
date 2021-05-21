@@ -26,6 +26,7 @@ export const getRandomColor = (): string => {
 }
 
 export const getGithubData = async (userName: string): Promise<IProfile> => {
+  console.log(getBaseUrl())
   const userProfileData = await axios.get(`${getBaseUrl()}/api/profile`, {
     params: { userName: userName ?? '' },
   })
@@ -91,6 +92,7 @@ export const generateChartColors = (length: number): string[] => {
 export const getBaseUrl = (): string => {
   let baseUrl = ''
   if (process.env.NODE_ENV === 'production' && process.env.VERCEL_URL) {
+    console.log('Is Production')
     baseUrl = `https://${process.env.VERCEL_URL}`
   } else if (process.env.NODE_ENV !== 'production' && process.env.PUBLIC_API_URL) {
     baseUrl = process.env.PUBLIC_API_URL
