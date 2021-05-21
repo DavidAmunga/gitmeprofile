@@ -1,7 +1,7 @@
 import React from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import Card from '../Card'
-import { getRandomColor, hexToRgb } from '~/utils/functions'
+import { generateChartColors } from '~/utils/functions'
 import { ChartData, ChartOptions } from 'chart.js'
 import { useAppContext } from '~/context/AppContext'
 
@@ -9,8 +9,12 @@ const options: ChartOptions = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'right',
+      position: 'left',
       align: 'center',
+      labels: {
+        boxWidth: 15,
+        boxHeight: 15,
+      },
     },
   },
 }
@@ -24,14 +28,12 @@ const MostStarredRepoChart = (): JSX.Element => {
       const sortBy = 'stargazers_count'
 
       const mostStarredRepos = repos
-        .filter((repo) => !repo.fork)
+        .filter((repo) => !repo.fork && repo.stargazers_count > 0)
         .sort((a, b) => b[sortBy] - a[sortBy])
         .slice(0, 5)
       const labels = mostStarredRepos.map((repo) => repo.name)
       const data = mostStarredRepos.map((repo) => repo[sortBy])
-      const colors = mostStarredRepos.map(() => hexToRgb(getRandomColor(), '.7'))
-      // const borderColors = mostStarredRepos.map((repo) => hexToRgb('#000', '.4'))
-      // console.log(colors)
+      const colors = generateChartColors(data.length)
 
       const chartData: ChartData = {
         labels,
@@ -56,7 +58,7 @@ const MostStarredRepoChart = (): JSX.Element => {
   return (
     <Card className="p-4">
       <p className="text-lg font-bold">Most Stars per Repo</p>
-      {chartData ? <Pie type="" options={options} data={chartData} /> : <div></div>}
+      {chartData ? <Doughnut type="" options={options} data={chartData} /> : <div></div>}
     </Card>
   )
 }

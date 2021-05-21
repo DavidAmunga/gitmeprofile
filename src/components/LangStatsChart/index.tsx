@@ -1,7 +1,7 @@
 import React from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import Card from '../Card'
-import { hexToRgb } from '~/utils/functions'
+import { generateChartColors } from '~/utils/functions'
 import { ChartData, ChartOptions } from 'chart.js'
 import { useAppContext } from '~/context/AppContext'
 import LangStatsLoader from './loader'
@@ -10,13 +10,13 @@ const options: ChartOptions = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'right',
+      position: 'left',
       align: 'center',
     },
   },
 }
 
-const LangStats = (): JSX.Element => {
+const LangStatsChart = (): JSX.Element => {
   const [chartData, setChartData] = React.useState<ChartData | null>(null)
   const appContext = useAppContext()
   const langStats = appContext.profile.langStats
@@ -25,8 +25,7 @@ const LangStats = (): JSX.Element => {
     if (langStats) {
       const labels = langStats.map((stat) => stat.label)
       const data = langStats.map((stat) => stat.value)
-      const colors = langStats.map((stat) => hexToRgb(stat.color, '.4'))
-      const borderColors = langStats.map(() => hexToRgb('#FFF', '1'))
+      const colors = generateChartColors(data.length)
 
       const chartData: ChartData = {
         labels,
@@ -35,7 +34,6 @@ const LangStats = (): JSX.Element => {
             data,
             fill: true,
             backgroundColor: colors,
-            borderColor: borderColors,
             borderWidth: 2,
           },
         ],
@@ -51,9 +49,9 @@ const LangStats = (): JSX.Element => {
   return (
     <Card className="p-4">
       <p className="text-lg font-bold">Repos per language</p>
-      {chartData ? <Pie type="pie" options={options} data={chartData} /> : <div></div>}
+      {chartData ? <Doughnut type="doughnut" options={options} data={chartData} /> : <div></div>}
     </Card>
   )
 }
 
-export default LangStats
+export default LangStatsChart

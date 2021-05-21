@@ -5,7 +5,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Profile from '~/components/Profile'
 import Header from '~/components/Header'
 import RequestCount from '~/components/RequestCount'
-import LangStats from '../../components/LangStats'
+import LangStatsChart from '../../components/LangStatsChart'
 import MostStarredRepoChart from '~/components/MostStarredRepoChart'
 import MostStarredLanguageChart from '~/components/MostStarredLanguageChart'
 import Footer from '~/components/Footer'
@@ -13,6 +13,7 @@ import Footer from '~/components/Footer'
 import { getGithubData, isRateLimitOk } from '~/utils/functions'
 import { IProfile, useAppContext } from '~/context/AppContext'
 import MostCommitsRepoChart from '~/components/MostCommitsRepoChart'
+import MostCommitsLanguageChart from '~/components/MostCommitsLanguageChart'
 
 type UserPageProps = {
   profile: IProfile
@@ -55,15 +56,16 @@ const UserPage = ({ profile, error }: UserPageProps): JSX.Element => {
         <Profile />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 mt-6">
           {/* Repos per Language Stats */}
-          <LangStats />
+          <LangStatsChart />
           <MostStarredLanguageChart />
           <MostStarredRepoChart />
         </div>
         {/* Divider */}
         <div className="h-0.5 w-full bg-gray-200 mt-4 rounded-full"></div>
         {/* <MostCommitsRepoChart /> */}
-        <div className="w-full mt-6 justify-between">
+        <div className="w-full grid md:grid-cols-2 gap-x-4 mt-6">
           <MostCommitsRepoChart />
+          <MostCommitsLanguageChart />
         </div>
         <Footer />
       </div>

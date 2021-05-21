@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useState, useEffect } from 'react'
 import { CommitResponse } from '~/entities/CommitResponse'
 import { LangStat } from '~/entities/LangStats/LangStat'
+import { CommitLanguageResponse } from '~/entities/LanguageResponse'
 import { Repo } from '~/entities/Repo'
 import { UserProfile } from '~/entities/UserProfile'
 
@@ -8,6 +9,7 @@ export interface IProfile {
   langStats: LangStat[] | null
   repos: Repo[] | null
   commits: CommitResponse[] | null
+  commitsLanguage: CommitLanguageResponse[] | null
   profile: UserProfile | null
 }
 
@@ -16,7 +18,13 @@ type AppContextType = {
   setUserProfile: (profile: IProfile) => void
 }
 
-const defaultProfile = { langStats: null, repos: null, commits: null, profile: null }
+const defaultProfile = {
+  langStats: null,
+  repos: null,
+  commits: null,
+  profile: null,
+  commitsLanguage: null,
+}
 const defaultState: AppContextType = {
   profile: defaultProfile,
   setUserProfile: () => {
@@ -41,7 +49,7 @@ export function AppProvider({ children }: Props): JSX.Element {
   const [value, setValue] = useState<AppContextType>(defaultState)
 
   const setUserProfile = (userProfile: IProfile): void => {
-    console.log(userProfile)
+    // console.log(userProfile)
     setProfile({ ...profile, ...userProfile })
   }
   useEffect(() => {

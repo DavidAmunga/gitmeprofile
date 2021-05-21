@@ -42,6 +42,13 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
     params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
   })
   const commitsStats = commitsData.data
+  const commitsLanguagesData = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/commits-languages`,
+    {
+      params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
+    }
+  )
+  const commitsLanguagesStats = commitsLanguagesData.data
   // console.log(userProfile)
   // console.log(langStats)
   // console.log(repoStats)
@@ -51,6 +58,7 @@ export const getGithubData = async (userName: string): Promise<IProfile> => {
     langStats,
     repos: repoStats,
     commits: commitsStats,
+    commitsLanguage: commitsLanguagesStats,
   }
   return _profile
 }
@@ -64,4 +72,20 @@ export const isRateLimitOk = async (): Promise<boolean> => {
   } else {
     return true
   }
+}
+
+export function getRandomInt(min: number, max: number): number {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min) + min) //The maximum is exclusive and the minimum is inclusive
+}
+
+export const generateChartColors = (length: number): string[] => {
+  const colors: string[] = []
+  const chartColors = ['#EDC666', '#E16D81', '#8B64EB', '#55A2E1', '#75C87E']
+  for (let i = 0; i < length; i++) {
+    const color = chartColors[i > length ? getRandomInt(0, chartColors.length - 1) : i]
+    colors.push(color)
+  }
+  return colors
 }

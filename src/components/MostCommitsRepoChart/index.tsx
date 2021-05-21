@@ -1,9 +1,9 @@
 import React from 'react'
 import { ChartData, ChartOptions } from 'chart.js'
 import Card from '../Card'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import { useAppContext } from '~/context/AppContext'
-import { getRandomColor, hexToRgb } from '~/utils/functions'
+import { generateChartColors } from '~/utils/functions'
 
 type RepoCommits = {
   count: number
@@ -14,7 +14,12 @@ const options: ChartOptions = {
   maintainAspectRatio: true,
   plugins: {
     legend: {
-      align: 'start',
+      position: 'right',
+      align: 'center',
+      labels: {
+        boxWidth: 15,
+        boxHeight: 15,
+      },
     },
   },
 }
@@ -51,7 +56,7 @@ const MostCommitsRepoChart = (): JSX.Element => {
 
       const labels = sortedRepoCommits.map((repoCommit) => repoCommit.repoName)
       const data = sortedRepoCommits.map((repoCommit) => repoCommit.count)
-      const colors = sortedRepoCommits.map(() => hexToRgb(getRandomColor(), '0.4'))
+      const colors = generateChartColors(data.length)
 
       const chartData: ChartData = {
         labels,
@@ -71,7 +76,7 @@ const MostCommitsRepoChart = (): JSX.Element => {
   return (
     <Card className="p-4 mt-4">
       <p className="text-lg font-bold">Commits Per Repo (Top 10)</p>
-      {data ? <Pie type="" options={options} data={data} /> : <div></div>}
+      {data ? <Doughnut type="" options={options} data={data} /> : <div></div>}
     </Card>
   )
 }

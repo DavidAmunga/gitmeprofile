@@ -1,7 +1,7 @@
 import React from 'react'
-import { Pie } from 'react-chartjs-2'
+import { Doughnut } from 'react-chartjs-2'
 import Card from '../Card'
-import { getRandomColor, hexToRgb } from '~/utils/functions'
+import { generateChartColors } from '~/utils/functions'
 import { ChartData, ChartOptions } from 'chart.js'
 import { useAppContext } from '~/context/AppContext'
 
@@ -9,8 +9,12 @@ const options: ChartOptions = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'right',
+      position: 'left',
       align: 'center',
+      labels: {
+        boxWidth: 15,
+        boxHeight: 15,
+      },
     },
   },
 }
@@ -26,6 +30,7 @@ const MostStarredLanguageChart = (): JSX.Element => {
       const languages = new Set(
         repos.filter((repo) => repo.stargazers_count > 0).map((repo) => repo.language)
       )
+
       const labels = Array.from(languages.values()).filter((l) => l)
 
       const data = labels.map((lang) => {
@@ -35,7 +40,7 @@ const MostStarredLanguageChart = (): JSX.Element => {
         return starSum
       })
 
-      const colors = data.map(() => hexToRgb(getRandomColor(), '.7'))
+      const colors = generateChartColors(data.length)
       // const borderColors = mostStarredRepos.map((repo) => hexToRgb('#000', '.4'))
       // console.log(colors)
 
@@ -60,7 +65,7 @@ const MostStarredLanguageChart = (): JSX.Element => {
   return (
     <Card className="p-4">
       <p className="text-lg font-bold">Most Stars per Language</p>
-      {chartData ? <Pie type="" options={options} data={chartData} /> : <div></div>}
+      {chartData ? <Doughnut type="" options={options} data={chartData} /> : <div></div>}
     </Card>
   )
 }
