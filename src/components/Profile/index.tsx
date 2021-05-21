@@ -16,10 +16,10 @@ const Profile = (): JSX.Element => {
       <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 w-full">
         <img
           alt={`Profile for ${profile.name}`}
-          className="h-40 w-40 rounded-full border-8 border-gray-1000 dark:border-gray-200"
+          className="h-32 w-32 rounded-full border-8 border-gray-1000 dark:border-gray-200"
           src={profile.avatar_url}
         />
-        <div className="w-full md:w-2/3 flex flex-col space-y-2">
+        <div className="w-full flex flex-col space-y-2">
           <h1>
             {profile.name ?? profile.login}{' '}
             <a
