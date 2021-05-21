@@ -26,23 +26,23 @@ export const getRandomColor = (): string => {
 }
 
 export const getGithubData = async (userName: string): Promise<IProfile> => {
-  const userProfileData = await axios.get(`${process.env.VERCEL_URL}/api/profile`, {
+  const userProfileData = await axios.get(`${getBaseUrl()}/api/profile`, {
     params: { userName: userName ?? '' },
   })
   const userProfile: UserProfile = userProfileData.data
-  const langStatsData = await axios.get(`${process.env.VERCEL_URL}/api/languages`, {
+  const langStatsData = await axios.get(`${getBaseUrl()}/api/languages`, {
     params: { userName: userName ?? '' },
   })
   const langStats: LangStat[] = langStatsData.data
-  const repoStatsData = await axios.get(`${process.env.VERCEL_URL}/api/repositories`, {
+  const repoStatsData = await axios.get(`${getBaseUrl()}/api/repositories`, {
     params: { userName: userName ?? '' },
   })
   const repoStats = repoStatsData.data
-  const commitsData = await axios.get(`${process.env.VERCEL_URL}/api/commits`, {
+  const commitsData = await axios.get(`${getBaseUrl()}/api/commits`, {
     params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
   })
   const commitsStats = commitsData.data
-  const commitsLanguagesData = await axios.get(`${process.env.VERCEL_URL}/api/commits-languages`, {
+  const commitsLanguagesData = await axios.get(`${getBaseUrl()}/api/commits-languages`, {
     params: { userName: userName ?? '', publicRepoNo: userProfile.public_repos },
   })
   const commitsLanguagesStats = commitsLanguagesData.data
@@ -85,4 +85,15 @@ export const generateChartColors = (length: number): string[] => {
     colors.push(color)
   }
   return colors
+}
+
+// Configure Vercel URL in production
+export const getBaseUrl = (): string => {
+  let baseUrl = ''
+  if (process.env.NODE_ENV === 'production' && process.env.VERCEL_URL) {
+    baseUrl = `https://${process.env.VERCEL_URL}`
+  } else if (process.env.NODE_ENV !== 'production' && process.env.PUBLIC_API_URL) {
+    baseUrl = process.env.PUBLIC_API_URL
+  }
+  return baseUrl
 }
