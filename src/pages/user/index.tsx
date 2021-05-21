@@ -37,16 +37,17 @@ const UserPage = ({ profile }: UserPageProps): JSX.Element => {
 
 
   React.useEffect(() => {
-    getUserProfile()
+    if (router) {
+      getUserProfile()
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [router])
 
   const getUserProfile = async (): Promise<void> => {
     const { userName } = router.query
     // eslint-disable-next-line
     // No Github Username
     if (!userName || userName.length == 0) {
-      setError('No Github Username')
       return
     }
     const rateLimitStatusData = await isRateLimitOk()
@@ -61,7 +62,8 @@ const UserPage = ({ profile }: UserPageProps): JSX.Element => {
 
   React.useEffect(() => {
     if (error) {
-      router.push('/')
+      console.log('Error is ' + error)
+      router.push(`/?error=${error}`)
     }
     // eslint-disable-next-line
   }, [error])

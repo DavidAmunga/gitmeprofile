@@ -13,10 +13,6 @@ const Footer = (): JSX.Element => {
           TailwindCSS{' '}
         </a>
         ,
-        <a className="text-blue-600" href="https://github.com/IonicaBizau/node-gh-polyglot">
-          Github Polyglot{' '}
-        </a>
-        ,
         <a className="text-blue-600" href="https://github.com/octokit/rest.js/">
           Octokit{' '}
         </a>{' '}

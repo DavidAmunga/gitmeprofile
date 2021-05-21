@@ -11,6 +11,7 @@ const getRepositories = async (userName: string): Promise<Repo[]> => {
     const octokit = new Octokit()
     const reposResponse = await octokit.request(`GET /users/${userName}/repos?per_page=100`)
     stats = reposResponse.data.filter((repo: Repo) => !repo.fork && repo.size > 0)
+    // stats = stats.slice(stats.length - 4, stats.length - 1)
     // console.log(stats)
     return stats
   }
