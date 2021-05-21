@@ -73,7 +73,7 @@ export const generateChartColors = (length: number): string[] => {
   const colors: string[] = []
   const chartColors = ['#EDC666', '#E16D81', '#8B64EB', '#55A2E1', '#75C87E']
   for (let i = 0; i < length; i++) {
-    const color = chartColors[i > length ? getRandomInt(0, chartColors.length - 1) : i]
+    const color = i > chartColors.length ? getRandomColor() : chartColors[i]
     colors.push(color)
   }
   return colors

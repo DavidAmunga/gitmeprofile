@@ -27,7 +27,7 @@ const LangStatsChart = (): JSX.Element => {
 
   React.useEffect(() => {
     if (langStats) {
-      const labels = langStats.map((stat) => stat.language)
+      const labels = langStats.map((stat) => stat.language ?? 'Unknown')
       const data = langStats.map((stat) => stat.count)
       const colors = generateChartColors(data.length)
 
