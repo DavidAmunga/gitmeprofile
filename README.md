@@ -9,11 +9,11 @@
   <a href="https://github.com/DavidAmunga/gitmeprofile/graphs/commit-activity" target="_blank">
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
-  <a href="https://github.com/DavidAmunga/gitmeprofile/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/DavidAmunga/GitMeProfile" />
+  <a href="https://github.com/DavidAmunga/gitmeprofile/blob/main/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/DavidAmunga/gitmeProfile" />
   </a>
   <a href="https://twitter.com/\davidamunga_" target="_blank">
-    <img alt="Twitter: \davidamunga_" src="https://img.shields.io/twitter/follow/\davidamunga_.svg?style=social" />
+    <img alt="Twitter: davidamunga_" src="https://img.shields.io/twitter/follow/davidamunga_.svg?style=social" />
   </a>
 </p>
 
