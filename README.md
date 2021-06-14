@@ -1,34 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img src="img/logo.png" width="120">
 
-## Getting Started
+<h1 >GitMeProfile</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/DavidAmunga/gitmeprofile#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/DavidAmunga/gitmeprofile/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/DavidAmunga/gitmeprofile/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/DavidAmunga/GitMeProfile" />
+  </a>
+  <a href="https://twitter.com/\davidamunga_" target="_blank">
+    <img alt="Twitter: \davidamunga_" src="https://img.shields.io/twitter/follow/\davidamunga_.svg?style=social" />
+  </a>
+</p>
 
-First, run the development server:
+> Github Profile Stats Visualizer tool
 
-```bash
-npm run dev
-# or
-yarn dev
+### 🏠 [Homepage](https://gitmeprofile.vercel.app)
+
+ <img alt="Screenshot" src="img/screenshot.png" />
+
+
+## Technologies used
+- [NextJS](https://nextjs.com)
+- [Octokit](https://octokit.github.io/rest.js/v18)
+- [ChartJS](https://www.chartjs.org/)
+- [TailwindCSS](https://tailwindcss.com)
+
+
+## Install
+
+```sh
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```sh
+yarn run start
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Future Features to add
+- [ ] Commits per Repo Chart
+- [ ] Stars per Repo Chart
+- [ ] Commit Chart for the past year
+- [ ] User Authentication to increase RateLimit requests *(Current is 60/hour )*
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Author
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+👤 **David Amunga**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+* Website: https://davidamunga.com
+* Twitter: [@davidamunga_](https://twitter.com/davidamunga_)
+* Github: [@DavidAmunga](https://github.com/DavidAmunga)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## How to to Contribute
+---
+1. Clone repo and create a branch ```$ git checkout https://github.com/DavidAmunga/gitmeprofile -b branch_name.```
+2. Make Changes and Test
+3. Submit Pull Request with comprehensive description of changes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2021 [David Amunga](https://github.com/DavidAmunga).<br />
+This project is [MIT](https://github.com/DavidAmunga/gitmeprofile/blob/master/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

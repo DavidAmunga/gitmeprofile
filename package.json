@@ -1,7 +1,15 @@
 {
   "name": "gitmeprofile",
-  "version": "0.1.0",
+  "description": "Github Profile Stats Visualizer tool",
+  "author": "David Amunga",
+  "version": "1.0.0",
   "private": true,
+  "license":"MIT",
+  "homepage": "https://gitmeprofile.vercel.app",
+  "repository": {
+    "type":"git",
+    "url":"git+https://github.com/DavidAmunga/gitmeprofile.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
